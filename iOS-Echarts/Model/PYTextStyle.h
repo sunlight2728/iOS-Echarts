@@ -10,22 +10,48 @@
 
 @class PYColor;
 
-@interface PYTextStyle : NSObject
+typedef NSString *PYTextStyleFontStyle;
+typedef NSString *PYTextStyleFontWeight;
 
-@property (retain, nonatomic) PYColor *color;
-@property (retain, nonatomic) NSString *decoration;
-@property (retain, nonatomic) NSString *align;
-@property (retain, nonatomic) NSString *baseLine;
-@property (retain, nonatomic) NSString *fontFamily;
-@property (retain, nonatomic) NSNumber *fontSize;
-@property (retain, nonatomic) NSString *fontStyle;
-@property (retain, nonatomic) NSString *fontWeight;
+FOUNDATION_EXPORT PYTextStyleFontStyle const PYTextStyleFontStyleNormal;
+FOUNDATION_EXPORT PYTextStyleFontStyle const PYTextStyleFontStyleItalic;
+FOUNDATION_EXPORT PYTextStyleFontStyle const PYTextStyleFontStyleOblique;
+
+FOUNDATION_EXPORT PYTextStyleFontWeight const PYTextStyleFontWeightNormal;
+FOUNDATION_EXPORT PYTextStyleFontWeight const PYTextStyleFontWeightBold;
+FOUNDATION_EXPORT PYTextStyleFontWeight const PYTextStyleFontWeightBolder;
+FOUNDATION_EXPORT PYTextStyleFontWeight const PYTextStyleFontWeightLighter;
 
 /**
- *  用number类型来设置fontWeight
  *
- *  @param number 字体粗细
+ *  You can goto this website for references:
+ *  http://echarts.baidu.com/echarts2/doc/doc.html#TextStyle
+ *
  */
--(void)setFontWeightByNumber:(NSNumber *)number;
+@interface PYTextStyle : NSObject
+
+@property (nonatomic, strong) id color;
+@property (nonatomic, copy) NSString *decoration;
+@property (nonatomic, copy) NSString *align;
+@property (nonatomic, copy) NSString *baseLine;
+@property (nonatomic, copy) NSString *fontFamily;
+@property (nonatomic, strong) NSNumber *fontSize;
+@property (nonatomic, copy) PYTextStyleFontStyle fontStyle;
+@property (nonatomic, copy) id fontWeight;
+@property (nonatomic, strong) id shadowColor;
+@property (nonatomic, strong) NSNumber *shadowBlur;
+
+PYInitializerTemplate(PYTextStyle, textStyle);
+
+PYPropertyEqualTemplate(PYTextStyle, id, color);
+PYPropertyEqualTemplate(PYTextStyle, NSString *, decoration);
+PYPropertyEqualTemplate(PYTextStyle, NSString *, align);
+PYPropertyEqualTemplate(PYTextStyle, NSString *, baseLine);
+PYPropertyEqualTemplate(PYTextStyle, NSString *, fontFamily);
+PYPropertyEqualTemplate(PYTextStyle, NSNumber *, fontSize);
+PYPropertyEqualTemplate(PYTextStyle, PYTextStyleFontStyle, fontStyle);
+PYPropertyEqualTemplate(PYTextStyle, id, fontWeight);
+PYPropertyEqualTemplate(PYTextStyle, id, shadowColor);
+PYPropertyEqualTemplate(PYTextStyle, NSNumber *, shadowBlur);
 
 @end

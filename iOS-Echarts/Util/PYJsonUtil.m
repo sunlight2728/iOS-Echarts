@@ -13,13 +13,13 @@
 @implementation PYJsonUtil
 
 /**
- *  NSObject转json
+ *  Convert NSObject to Json String
  *
- *  @param obj 带信息的NSObject对象
+ *  @param obj The object which needs to convert json string
  *
- *  @return 转换后的Json
+ *  @return The json string
  */
-+(NSString *)getJSONString:(id)obj {
++ (NSString *)getJSONString:(id)obj {
     NSString *jsonString;
     NSData *jsonData;
     if ([obj isKindOfClass:[NSArray class]] || [obj isKindOfClass:[NSMutableArray class]]) {
@@ -30,11 +30,26 @@
             jsonString = [NSString stringWithFormat:@"%@%@,", jsonString, tmpJson];
         }
         jsonString = [[jsonString substringToIndex:jsonString.length-1] stringByAppendingString:@"]"];
+    } else if ([obj isKindOfClass:[NSDictionary class]] || [obj isKindOfClass:[NSMutableDictionary class]]) {
+        jsonString = [self jsonStringWithPrettyPrint:YES dic:obj];
     } else {
         jsonData = [self getJSONData:obj];
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
     return jsonString;
+}
+
++ (NSString*)jsonStringWithPrettyPrint:(BOOL)prettyPrint dic:(NSDictionary *)dic {
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                       options:(NSJSONWritingOptions)    (prettyPrint ? NSJSONWritingPrettyPrinted : 0)
+                                                         error:&error];
+    if (!jsonData) {
+        NSLog(@"jsonStringWithPrettyPrint: error: %@", error.localizedDescription);
+        return @"{}";
+    } else {
+        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
 }
 
 + (NSData*)getJSONData:(id)obj {
@@ -82,6 +97,7 @@
             }
             [dic setObject:value forKey:propName];
         }
+        free(props);
         class = [class superclass];
     } while (class != [NSObject class]);
     return dic;

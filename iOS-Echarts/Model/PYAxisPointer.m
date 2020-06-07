@@ -7,9 +7,15 @@
 //
 
 #import "PYAxisPointer.h"
+#import "PYLineStyle.h"
+#import "PYAreaStyle.h"
 
+PYAxisPointerType PYAxisPointerTypeLine = @"line";
+PYAxisPointerType PYAxisPointerTypeCross = @"cross";
+PYAxisPointerType PYAxisPointerTypeShadow = @"shadow";
+PYAxisPointerType PYAxisPointerTypeNone = @"none";
 
-#define AXIS_POINT_SCOPE [NSArray arrayWithObjects:@"line", @"cross", @"shadow", @"none", nil]
+static NSArray<PYAxisPointerType> *axisPointScope;
 @interface PYAxisPointer()
 
 @end
@@ -17,21 +23,37 @@
 
 @implementation PYAxisPointer
 
++ (void)initialize
+{
+    if (self == [PYAxisPointer class]) {
+        axisPointScope = @[PYAxisPointerTypeLine, PYAxisPointerTypeCross, PYAxisPointerTypeShadow, PYAxisPointerTypeNone];
+    }
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _type = @"line";
+        _type = PYAxisPointerTypeLine;
     }
     return self;
 }
 
--(void)setType:(NSString *)type {
-    if (![AXIS_POINT_SCOPE containsObject:type]) {
+- (void)setType:(NSString *)type {
+    if (![axisPointScope containsObject:type]) {
         NSLog(@"ERROR: AxisPoint does not support the type --- %@", type);
-        type = @"line";
+        _type = PYAxisPointerTypeLine;
+        return;
     }
-    _type = type;
+    _type = [type copy];
 }
+
+PYInitializerImpTemplate(PYAxisPointer);
+
+PYPropertyEqualImpTemplate(PYAxisPointer, BOOL, show);
+PYPropertyEqualImpTemplate(PYAxisPointer, NSString *, type);
+PYPropertyEqualImpTemplate(PYAxisPointer, PYLineStyle *, lineStyle);
+PYPropertyEqualImpTemplate(PYAxisPointer, PYLineStyle *, crossStyle);
+PYPropertyEqualImpTemplate(PYAxisPointer, PYAreaStyle *, shadowStyle);
 
 @end

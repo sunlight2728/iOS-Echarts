@@ -10,10 +10,22 @@
 
 @class PYLineStyle;
 
+/**
+ *
+ *  You can goto this website for references:
+ *  http://echarts.baidu.com/echarts2/doc/doc.html#AxisAxisline
+ *
+ */
 @interface PYAxisLine : NSObject
 
-@property (assign, nonatomic) BOOL show;
-@property (assign, nonatomic) BOOL onZero;
-@property (retain, nonatomic) PYLineStyle *lineStyle;
+@property (nonatomic, assign) BOOL show;
+@property (nonatomic, assign) BOOL onZero;
+@property (nonatomic, strong) PYLineStyle *lineStyle;
+
+PYInitializerTemplate(PYAxisLine, axisLine);
+
+PYPropertyEqualTemplate(PYAxisLine, BOOL, show);
+PYPropertyEqualTemplate(PYAxisLine, BOOL, onZero);
+PYPropertyEqualTemplate(PYAxisLine, PYLineStyle *, lineStyle);
 
 @end

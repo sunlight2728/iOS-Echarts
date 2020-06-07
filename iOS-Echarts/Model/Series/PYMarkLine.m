@@ -7,15 +7,28 @@
 //
 
 #import "PYMarkLine.h"
+#import "PYItemStyle.h"
 
 @implementation PYBundling
 
+PYInitializerImpTemplate(PYBundling);
 
+PYPropertyEqualImpTemplate(PYBundling, BOOL, enable);
+PYPropertyEqualImpTemplate(PYBundling, NSNumber *, maxTurningAngle);
 
 @end
 
 @implementation PYMarkLineEffect
 
+PYInitializerImpTemplate(PYMarkLineEffect);
+
+PYPropertyEqualImpTemplate(PYMarkLineEffect, BOOL, show);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, BOOL, loop);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, NSNumber *, period);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, NSNumber *, scaleSize);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, PYColor *, color);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, PYColor *, shadowColor);
+PYPropertyEqualImpTemplate(PYMarkLineEffect, NSNumber *, shadowBlur);
 
 @end
 
@@ -26,7 +39,7 @@
     self = [super init];
     if (self) {
         _clickable = YES;
-        _symbol = @[@"circle", @"arrow"];
+        _symbol = @[PYSymbolCircle, PYSymbolArrow];
         _symbolSize = @[@(2), @(4)];
         _large = NO;
         _smooth = NO;
@@ -43,5 +56,22 @@
     }
     return self;
 }
+
+PYInitializerImpTemplate(PYMarkLine);
+
+PYPropertyEqualImpTemplate(PYMarkLine, BOOL, clickable);
+PYPropertyEqualImpTemplate(PYMarkLine, id, symbol);
+PYPropertyEqualImpTemplate(PYMarkLine, id, symbolSize);
+PYPropertyEqualImpTemplate(PYMarkLine, id, symbolRotate);
+PYPropertyEqualImpTemplate(PYMarkLine, BOOL, large);
+PYPropertyEqualImpTemplate(PYMarkLine, BOOL, smooth);
+PYPropertyEqualImpTemplate(PYMarkLine, NSNumber *, smoothness);
+PYPropertyEqualImpTemplate(PYMarkLine, NSNumber *, precision);
+PYPropertyEqualImpTemplate(PYMarkLine, PYBundling *, bundling);
+PYPropertyEqualImpTemplate(PYMarkLine, PYMarkLineEffect *, effect);
+PYPropertyEqualImpTemplate(PYMarkLine, PYItemStyle *, itemStyle);
+PYPropertyEqualImpTemplate(PYMarkLine, NSMutableArray *, data);
+
+PYAddMethodImpTemplate(PYMarkLine, NSObject, Data, data);
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation PYAxisLine
 
--(instancetype)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         _show = YES;
@@ -20,5 +20,11 @@
     }
     return self;
 }
+
+PYInitializerImpTemplate(PYAxisLine);
+
+PYPropertyEqualImpTemplate(PYAxisLine, BOOL, show);
+PYPropertyEqualImpTemplate(PYAxisLine, BOOL, onZero);
+PYPropertyEqualImpTemplate(PYAxisLine, PYLineStyle *, lineStyle);
 
 @end

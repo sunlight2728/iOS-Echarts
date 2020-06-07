@@ -7,6 +7,7 @@
 //
 
 #import "PYItemStyle.h"
+#import "PYItemStyleProp.h"
 
 @implementation PYItemStyle
 
@@ -19,5 +20,10 @@
     }
     return self;
 }
+
+PYInitializerImpTemplate(PYItemStyle);
+
+PYPropertyEqualImpTemplate(PYItemStyle, PYItemStyleProp *, normal);
+PYPropertyEqualImpTemplate(PYItemStyle, PYItemStyleProp *, emphasis);
 
 @end

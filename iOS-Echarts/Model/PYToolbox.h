@@ -7,29 +7,55 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PYToolboxFeature.h"
 
-@class PYColor, PYTextStyle;
+@class PYColor, PYToolboxFeature, PYTextStyle;
 
+/**
+ *
+ *  You can goto this website for references:
+ *  http://echarts.baidu.com/echarts2/doc/doc.html#Toolbox
+ *
+ */
 @interface PYToolbox : NSObject
 
-@property (assign, nonatomic) BOOL show;
-@property (retain, nonatomic) NSNumber *zlevel;
-@property (retain, nonatomic) NSNumber *z;
-@property (retain, nonatomic) NSString *orient;
-@property (retain, nonatomic) id x;
-@property (retain, nonatomic) id y;
-@property (retain, nonatomic) PYColor *backgroundColor;
-@property (retain, nonatomic) PYColor *borderColor;
-@property (retain, nonatomic) NSNumber *borderWidth;
-@property (retain, nonatomic) id padding;
-@property (retain, nonatomic) NSNumber *itemGap;
-@property (retain, nonatomic) NSNumber *itemSize;
-@property (retain, nonatomic) NSArray *color;
-@property (retain, nonatomic) PYColor *disableColor;
-@property (retain, nonatomic) PYColor *effectiveColor;
-@property (assign, nonatomic) BOOL showTitle;
-@property (retain, nonatomic) PYTextStyle *textStyle;
-@property (retain, nonatomic) PYToolboxFeature *feature;
+@property (nonatomic, assign) BOOL show;
+@property (nonatomic, strong) NSNumber *zlevel;
+@property (nonatomic, strong) NSNumber *z;
+@property (nonatomic, copy) PYOrient orient;
+@property (nonatomic, strong) id x;
+@property (nonatomic, strong) id y;
+@property (nonatomic, strong) PYColor *backgroundColor;
+@property (nonatomic, strong) PYColor *borderColor;
+@property (nonatomic, strong) NSNumber *borderWidth;
+@property (nonatomic, strong) id padding;
+@property (nonatomic, strong) NSNumber *itemGap;
+@property (nonatomic, strong) NSNumber *itemSize;
+@property (nonatomic, copy) NSArray *color;
+@property (nonatomic, strong) PYColor *disableColor;
+@property (nonatomic, strong) PYColor *effectiveColor;
+@property (nonatomic, assign) BOOL showTitle;
+@property (nonatomic, strong) PYTextStyle *textStyle;
+@property (nonatomic, strong) PYToolboxFeature *feature;
+
+PYInitializerTemplate(PYToolbox, toolbox);
+
+PYPropertyEqualTemplate(PYToolbox, BOOL, show);
+PYPropertyEqualTemplate(PYToolbox, NSNumber *, zlevel);
+PYPropertyEqualTemplate(PYToolbox, NSNumber *, z);
+PYPropertyEqualTemplate(PYToolbox, PYOrient, orient);
+PYPropertyEqualTemplate(PYToolbox, id, x);
+PYPropertyEqualTemplate(PYToolbox, id, y);
+PYPropertyEqualTemplate(PYToolbox, PYColor *, backgroundColor);
+PYPropertyEqualTemplate(PYToolbox, PYColor *, borderColor);
+PYPropertyEqualTemplate(PYToolbox, NSNumber *, borderWidth);
+PYPropertyEqualTemplate(PYToolbox, id, padding);
+PYPropertyEqualTemplate(PYToolbox, NSNumber *, itemGap);
+PYPropertyEqualTemplate(PYToolbox, NSNumber *, itemSize);
+PYPropertyEqualTemplate(PYToolbox, NSArray *, color);
+PYPropertyEqualTemplate(PYToolbox, PYColor *, disableColor);
+PYPropertyEqualTemplate(PYToolbox, PYColor *, effectiveColor);
+PYPropertyEqualTemplate(PYToolbox, BOOL, showTitle);
+PYPropertyEqualTemplate(PYToolbox, PYTextStyle *, textStyle);
+PYPropertyEqualTemplate(PYToolbox, PYToolboxFeature *, feature);
 
 @end

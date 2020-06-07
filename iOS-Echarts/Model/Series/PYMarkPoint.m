@@ -7,22 +7,45 @@
 //
 
 #import "PYMarkPoint.h"
+#import "PYItemStyle.h"
 
-#define MARK_POINT_EFFECT_TYPE_SCOPE [NSArray arrayWithObjects:@"bounce", @"scale", nil]
+PYMarkPointEffectType const PYMarkPointEffectTypeScale  = @"scale";
+PYMarkPointEffectType const PYMarkPointEffectTypeBounce = @"bounce";
 
+static NSArray<PYMarkPointEffectType> *markPointEffectTypeScope;
 @interface PYMarkPointEffect()
 
 @end
 
 @implementation PYMarkPointEffect
 
--(void)setType:(NSString *)type {
-    if (![MARK_POINT_EFFECT_TYPE_SCOPE containsObject:type]) {
-        NSLog(@"ERROR: MarkPointEffect does not support type --- %@", type);
-        type = @"scale";
++ (void)initialize
+{
+    if (self == [PYMarkPointEffect class]) {
+        markPointEffectTypeScope = @[PYMarkPointEffectTypeScale, PYMarkPointEffectTypeBounce];
     }
-    _type = type;
 }
+
+- (void)setType:(PYMarkPointEffectType)type {
+    if (![markPointEffectTypeScope containsObject:type]) {
+        NSLog(@"ERROR: MarkPointEffect does not support type --- %@", type);
+        type = PYMarkPointEffectTypeScale;
+        return;
+    }
+    _type = [type copy];
+}
+
+PYInitializerImpTemplate(PYMarkPointEffect);
+
+PYPropertyEqualImpTemplate(PYMarkPointEffect, BOOL, show);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, PYMarkPointEffectType, type);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, BOOL, loop);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, NSNumber *, period);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, NSNumber *, scaleSize);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, NSNumber *, bounceDistance);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, PYColor *, color);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, PYColor *, shadowColor);
+PYPropertyEqualImpTemplate(PYMarkPointEffect, NSNumber *, shadowBlur);
 
 @end
 
@@ -33,12 +56,12 @@
     self = [super init];
     if (self) {
         _clickable = YES;
-        _symbol = @"pin";
+        _symbol = PYSymbolPin;
         _symbolSize = @(10);
         _large = NO;
         _effect = [[PYMarkPointEffect alloc] init];
         _effect.show = NO;
-        _effect.type = @"scale";
+        _effect.type = PYMarkPointEffectTypeScale;
         _effect.period = @(15);
         _effect.scaleSize = @(2);
         _effect.bounceDistance = @(10);
@@ -46,5 +69,18 @@
     }
     return self;
 }
+
+PYInitializerImpTemplate(PYMarkPoint);
+
+PYPropertyEqualImpTemplate(PYMarkPoint, BOOL, clickable);
+PYPropertyEqualImpTemplate(PYMarkPoint, id, symbol);
+PYPropertyEqualImpTemplate(PYMarkPoint, id, symbolSize);
+PYPropertyEqualImpTemplate(PYMarkPoint, id, symbolRotate);
+PYPropertyEqualImpTemplate(PYMarkPoint, BOOL, large);
+PYPropertyEqualImpTemplate(PYMarkPoint, PYMarkPointEffect *, effect);
+PYPropertyEqualImpTemplate(PYMarkPoint, PYItemStyle *, itemStyle);
+PYPropertyEqualImpTemplate(PYMarkPoint, NSMutableArray *, data);
+
+PYAddMethodImpTemplate(PYMarkPoint, NSObject, Data, data);
 
 @end

@@ -7,16 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PYLineStyle.h"
 
-@class PYLineStyle;
-
+/**
+ *
+ *  You can goto this website for references:
+ *  http://echarts.baidu.com/echarts2/doc/doc.html#AxisAxistick
+ *
+ */
 @interface PYAxisTick : NSObject
 
-@property (assign, nonatomic) BOOL show;
-@property (retain, nonatomic) id interval;
-@property (assign, nonatomic) BOOL onGap;
-@property (assign, nonatomic) BOOL inside;
-@property (retain, nonatomic) NSNumber *length;
-@property (retain, nonatomic) PYLineStyle *lineStyle;
+@property (nonatomic, assign) BOOL show;
+@property (nonatomic, strong) id interval;
+@property (nonatomic, strong) NSNumber *splitNumber;
+@property (nonatomic, assign) BOOL onGap;
+@property (nonatomic, assign) BOOL inside;
+@property (nonatomic, strong) NSNumber *length;
+@property (nonatomic, strong) PYLineStyle *lineStyle;
+
+PYInitializerTemplate(PYAxisTick, axisTick);
+
+PYPropertyEqualTemplate(PYAxisTick, BOOL, show);
+PYPropertyEqualTemplate(PYAxisTick, id, interval);
+PYPropertyEqualTemplate(PYAxisTick, NSNumber *, splitNumber);
+PYPropertyEqualTemplate(PYAxisTick, BOOL, onGap);
+PYPropertyEqualTemplate(PYAxisTick, BOOL, inside);
+PYPropertyEqualTemplate(PYAxisTick, NSNumber *, length);
+PYPropertyEqualTemplate(PYAxisTick, PYLineStyle *, lineStyle);
 
 @end

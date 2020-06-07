@@ -28,4 +28,18 @@
     return self;
 }
 
+PYInitializerImpTemplate(PYGrid);
+
+PYPropertyEqualImpTemplate(PYGrid, NSNumber *, zlevel);
+PYPropertyEqualImpTemplate(PYGrid, NSNumber *, z);
+PYPropertyEqualImpTemplate(PYGrid, id, x);
+PYPropertyEqualImpTemplate(PYGrid, id, y);
+PYPropertyEqualImpTemplate(PYGrid, id, x2);
+PYPropertyEqualImpTemplate(PYGrid, id, y2);
+PYPropertyEqualImpTemplate(PYGrid, NSNumber *, width);
+PYPropertyEqualImpTemplate(PYGrid, NSNumber *, height);
+PYPropertyEqualImpTemplate(PYGrid, PYColor *, backgroundColor);
+PYPropertyEqualImpTemplate(PYGrid, NSNumber *, borderWidth);
+PYPropertyEqualImpTemplate(PYGrid, PYColor *, borderColor);
+
 @end

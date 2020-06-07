@@ -7,11 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PYItemStyleProp.h"
+
+@class PYItemStyleProp;
 
 @interface PYItemStyle : NSObject
 
-@property (retain, nonatomic) PYItemStyleProp *normal;
-@property (retain, nonatomic) PYItemStyleProp *emphasis;
+@property (nonatomic, strong) PYItemStyleProp *normal;
+@property (nonatomic, strong) PYItemStyleProp *emphasis;
+
+PYInitializerTemplate(PYItemStyle, itemStyle);
+
+PYPropertyEqualTemplate(PYItemStyle, PYItemStyleProp *, normal);
+PYPropertyEqualTemplate(PYItemStyle, PYItemStyleProp *, emphasis);
 
 @end

@@ -2,21 +2,57 @@
 <head>
     <title>ECharts</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 	<style type="text/CSS">
       div {background-color: transparent}
 	</style>
+    <script type="text/javascript">
+        var defaultTheme = {};
+        var blue = defaultTheme;
+        var dark = defaultTheme;
+        var gray = defaultTheme;
+        var green = defaultTheme;
+        var helianthus = defaultTheme;
+        var infographic = defaultTheme;
+        var macarons = defaultTheme;
+        var macarons2 = defaultTheme;
+        var mint = defaultTheme;
+        var red = defaultTheme;
+        var roma = defaultTheme;
+        var sakura = defaultTheme;
+        var shine = defaultTheme;
+    </script>
+    <!-- 主题引入 -->
+    <script src="theme/blue.js"></script>
+    <script src="theme/dark.js"></script>
+    <script src="theme/gray.js"></script>
+    <script src="theme/green.js"></script>
+    <script src="theme/helianthus.js"></script>
+    <script src="theme/infographic.js"></script>
+    <script src="theme/macarons.js"></script>
+    <script src="theme/macarons2.js"></script>
+    <script src="theme/mint.js"></script>
+    <script src="theme/red.js"></script>
+    <script src="theme/roma.js"></script>
+    <script src="theme/sakura.js"></script>
+    <script src="theme/shine.js"></script>
+    
     <!-- ECharts单文件引入 -->
-    <script src="js/echarts.js"></script>
+    <script src="js/echarts-all.js"></script>
     <script type="text/javascript">
     var option;
     var myChart;
+    var ecConfig;
     function echartViewAction(param) {
-        if (typeof param.seriesIndex != 'undefined') {
-            document.location.href = 'pyEchartAction://' + param.type + '#{"seriesIndex":"' +  + param.seriesIndex + '","dataIndex":"' + param.dataIndex + '"}';
+        // alert(JSON.stringify(param));
+        // alert(window.webkit);
+        if(window.webkit == undefined) {
+            window.parent.frames['action_frame'].location.href = 'pyEchartAction://' + param.type + '#' + JSON.stringify(param) + ''; // Support for UIWebView
+            
         } else {
-            document.location.href = 'pyEchartAction://' + param.type;
+            eval("window.webkit.messageHandlers." + param.type + ".postMessage(" + JSON.stringify(param) + ")"); // Support for WKWebView
         }
-        //document.location.href = 'pyEchartAction://' + param.type + '#{' + param.seriesIndex + ':' + param.dataIndex + '}';
+        //document.location.href = 'pyEchartAction://' + param.type + '#' + JSON.stringify(param) + '';
     }
     function preTask(obj) {
         var result;
@@ -53,79 +89,62 @@
     }
 	/**  
 	 * 构建动态图表  
-	 * @param url   获取后台数据地址  
-	 * @param time  图表查询时间  
-	 * @param elem  加载容器  
 	 */  
-	function loadEcharts(testdate){
-		//alert(realData);
-		// 路径配置
-        require.config({
-            paths: {
-                echarts: 'js'
-            }
-        });
-        
-        // 使用
-        require(
-            [
-                'echarts',
-                'echarts/chart/line', // 使用柱状图就加载line模块，按需加载
-                'echarts/chart/bar',
-                'echarts/chart/pie',
-                'echarts/chart/k',
-                'echarts/chart/scatter'
-            ],
-            function (ec) {
-                // 基于准备好的dom，初始化echarts图表
-                myChart = ec.init(document.getElementById('main'));
-                option = preTask(testdate);
-                //option = preTask(testdate);
-                // 为echarts对象加载数据
-                myChart.setOption(option);
-            }
-        );
+	function loadEcharts(echartJson, initParams){
+        //alert('init params : ' + JSON.stringify(echartJson));
+        initEchartView(initParams);
+        //alert('myChart:'+ myChart);
+        option = preTask(echartJson);
+        //alert('option:'+ option);
+        myChart.setOption(option);
 	}
+    function refreshWithOption(optionData) {
+        option = preTask(optionData);
+        myChart.setOption(option, true);
+    }
     function resizeDiv(cssText) {
+        //alert('cssText:'+cssText);
         var divMain = document.getElementById("main");
+        //alert('divMain:'+divMain);
         divMain.style.cssText = cssText;
     }
-    function initEchartView() {
-        // 路径配置
-        require.config({
-            paths: {
-                echarts: 'js'
-            }
-        });
-        // 使用
-        require(
-            [
-                'echarts',
-                'echarts/chart/line', // 使用柱状图就加载line模块，按需加载
-                'echarts/chart/bar',
-                'echarts/chart/pie',
-                'echarts/chart/k',
-                'echarts/chart/scatter'
-            ],
-            function (ec) {
-                var ecConfig = require('echarts/config');
-                // 基于准备好的dom，初始化echarts图表
-                myChart = ec.init(document.getElementById('main'));
-                
-                // 为echarts对象加载数据
-                myChart.setOption(option);
-                myChart.on(ecConfig.EVENT.CLICK, echartViewAction);
-                myChart.on(ecConfig.EVENT.DBLCLICK, echartViewAction);
-                myChart.on(ecConfig.EVENT.DATA_ZOOM, echartViewAction);
-                myChart.on(ecConfig.EVENT.LEGEND_SELECTED, echartViewAction);
-                myChart.on(ecConfig.EVENT.MAGIC_TYPE_CHANGED, echartViewAction);
-                myChart.on(ecConfig.EVENT.DATA_VIEW_CHANGED, echartViewAction);
-            }
-        );
+    function obtainEchartsImage(type){
+        //alert("type:" + type);
+        var result = myChart.getDataURL(type);
+        //alert('result:'+result);
+        //document.location.href = 'pyEchartAction://obtainImg#' + result + '';
+        if(window.webkit == undefined) {
+            window.parent.frames['action_frame'].location.href = 'pyEchartAction://obtainImg#' + result + ''; // Support for UIWebView
+        } else {
+            window.webkit.messageHandlers.obtainImg.postMessage(result); // Support for WKWebView
+        }
+    }
+    function initEchartView(initParams) {
+        // 基于准备好的dom，初始化echarts图表
+        if (initParams == null || initParams == 'undefined') {
+            myChart = echarts.init(document.getElementById('main'));
+            //alert('myChart:' + myChart);
+        } else {
+            myChart = echarts.init(document.getElementById('main'), initParams);
+        }
+    }
+    function addEchartActionHandler(eventName) {
+        var ecConfig = echarts.config;
+        myChart.on(eventName, echartViewAction);
+    }
+    function removeEchartActionHandler(name) {
+        myChart.un(name, echartViewAction);
+    }
+    function changeDataZoomRange(start, end) {
+        option = myChart.getOption();
+        option.dataZoom.start = start;
+        option.dataZoom.end = end;
+        myChart.component.dataZoom.absoluteZoom({'start':start, 'end': end});
+        myChart.setOption(option, true);
     }
     </script>
 </head>
-<body style="background-color: transparent"><!-- transparent-->
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<body style="background-color: transparent;margin:0px"><!-- transparent-->
+    <iframe name="action_frame" src="" style="display:none;"></iframe>
     <div id="main" style="height:270px;width:420px;" ></div><!-- style="height:270px;width:420px;margin-left:-30px;"-->
 </body>

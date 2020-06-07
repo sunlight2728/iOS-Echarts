@@ -10,26 +10,54 @@
 
 @class PYColor, PYTextStyle;
 
+/**
+ *
+ *  You can goto this website for references:
+ *  http://echarts.baidu.com/echarts2/doc/doc.html#Title
+ *
+ */
 @interface PYTitle : NSObject
 
-@property (assign, nonatomic) BOOL show;
-@property (retain, nonatomic) NSNumber *zlevel;
-@property (retain, nonatomic) NSNumber *z;
-@property (retain, nonatomic) NSString *text;
-@property (retain, nonatomic) NSString *link;
-@property (retain, nonatomic) NSString *target;
-@property (retain, nonatomic) NSString *subtext;
-@property (retain, nonatomic) NSString *sublink;
-@property (retain, nonatomic) NSString *subtarget;
-@property (retain, nonatomic) id x;
-@property (retain, nonatomic) id y;
-@property (retain, nonatomic) NSString *textAlign;
-@property (retain, nonatomic) PYColor *backgroundColor;
-@property (retain, nonatomic) PYColor *borderColor;
-@property (retain, nonatomic) NSNumber *borderWidth;
-@property (retain, nonatomic) id padding;
-@property (retain, nonatomic) NSNumber *itemGap;
-@property (retain, nonatomic) PYTextStyle *textStyle;
-@property (retain, nonatomic) PYTextStyle *subtextStyle;
+@property (nonatomic, assign) BOOL show;
+@property (nonatomic, strong) NSNumber *zlevel;
+@property (nonatomic, strong) NSNumber *z;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *link;
+@property (nonatomic, copy) NSString *target;
+@property (nonatomic, copy) NSString *subtext;
+@property (nonatomic, copy) NSString *sublink;
+@property (nonatomic, copy) NSString *subtarget;
+@property (nonatomic, strong) id x;
+@property (nonatomic, strong) id y;
+@property (nonatomic, copy) NSString *textAlign;
+@property (nonatomic, strong) PYColor *backgroundColor;
+@property (nonatomic, strong) PYColor *borderColor;
+@property (nonatomic, strong) NSNumber *borderWidth;
+@property (nonatomic, strong) id padding;
+@property (nonatomic, strong) NSNumber *itemGap;
+@property (nonatomic, strong) PYTextStyle *textStyle;
+@property (nonatomic, strong) PYTextStyle *subtextStyle;
+
+PYInitializerTemplate(PYTitle, title);
+
+PYPropertyEqualTemplate(PYTitle, BOOL, show);
+PYPropertyEqualTemplate(PYTitle, NSNumber *, zlevel);
+PYPropertyEqualTemplate(PYTitle, NSNumber *, z);
+PYPropertyEqualTemplate(PYTitle, NSString *, text);
+PYPropertyEqualTemplate(PYTitle, NSString *, link);
+PYPropertyEqualTemplate(PYTitle, NSString *, target);
+PYPropertyEqualTemplate(PYTitle, NSString *, subtext);
+PYPropertyEqualTemplate(PYTitle, NSString *, sublink);
+PYPropertyEqualTemplate(PYTitle, NSString *, subtarget);
+PYPropertyEqualTemplate(PYTitle, id, x);
+PYPropertyEqualTemplate(PYTitle, id, y);
+PYPropertyEqualTemplate(PYTitle, NSString *, textAlign);
+PYPropertyEqualTemplate(PYTitle, PYColor *, backgroundColor);
+PYPropertyEqualTemplate(PYTitle, PYColor *, borderColor);
+PYPropertyEqualTemplate(PYTitle, NSNumber *, borderWidth);
+PYPropertyEqualTemplate(PYTitle, id, padding);
+PYPropertyEqualTemplate(PYTitle, NSNumber *, itemGap);
+PYPropertyEqualTemplate(PYTitle, PYTextStyle *, textStyle);
+PYPropertyEqualTemplate(PYTitle, PYTextStyle *, subtextStyle);
 
 @end
